@@ -35,7 +35,7 @@ export default function bookSelected({ bookSelected, setBookSelected }) {
 
 
     return (
-        <aside className={` absolute z-40 md:static m-4   max-h-screen md:max-w-[320px] md:py-5 overflow-y-scroll scrollerStyle  ${Object.values(bookSelected).length > 0 ? '' : 'hidden'}`}>
+        <aside className={` absolute z-40 md:static m-4 md:m-0  max-h-screen md:max-w-[320px] md:py-5 overflow-y-scroll scrollerStyle  ${Object.values(bookSelected).length > 0 ? '' : 'hidden'}`}>
             <div
                 onClick={() => setBookSelected([])}
                 className='absolute ' >
