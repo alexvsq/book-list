@@ -35,13 +35,13 @@ export default function bookSelected({ bookSelected, setBookSelected }) {
 
 
     return (
-        <aside className={` max-h-screen max-w-[320px] py-5 overflow-y-scroll scrollerStyle  ${Object.values(bookSelected).length > 0 ? '' : 'hidden'}`}>
+        <aside className={` absolute z-40 md:static m-4   max-h-screen md:max-w-[320px] md:py-5 overflow-y-scroll scrollerStyle  ${Object.values(bookSelected).length > 0 ? '' : 'hidden'}`}>
             <div
                 onClick={() => setBookSelected([])}
                 className='absolute ' >
                 <IconClose />
             </div>
-            <section className='bg-gray p-4 rounded-[14px] mr-4 '>
+            <section className='bg-gray p-4 rounded-[14px] md:mr-4 '>
                 <div className=''>
 
                     <img src={bookSelected.book && bookSelected.book.cover} alt="" />

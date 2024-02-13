@@ -17,7 +17,7 @@ export default function bookList() {
 
         <section className='flex flex-1 '>
 
-            <ul className=' fixed z-20 px-5 py-8 flex gap-3'>
+            <ul className=' pt-20  fixed z-20 px-5 md:py-8 flex gap-3'>
                 <li
                     onClick={() => {
                         setPage('home')
@@ -33,10 +33,10 @@ export default function bookList() {
             </ul>
             <div className=' w-full '>
 
-                <div className=' max-h-screen overflow-y-scroll p-5 scrollerStyle'>
+                <div className=' max-h-screen overflow-y-scroll pt-12 pb-5 md:p-5 scrollerStyle'>
 
 
-                    <section className=' justify-center pt-20 grid  grid-cols-[repeat(auto-fit,minmax(200px,200px))] gap-4 '>
+                    <section className=' justify-center pt-20 grid   grid-cols-[repeat(auto-fit,minmax(200px,200px))] gap-2 md:gap-4 '>
 
                         {
                             page === 'home' && <Home bookSelected={bookSelected} setBookSelected={setBookSelected} />

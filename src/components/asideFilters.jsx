@@ -1,20 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { DataContext } from '../contexts/contexts';
 import booksJson from '../data/books.json'
-
+import IconFilter from '../assets/icon-filters'
 export default function asideFilters() {
 
-    const { textInput, setTextInput, SetGenreSearch, SetYearSort ,numPages , setNumPages } = useContext(DataContext)
+    const { textInput, setTextInput, SetGenreSearch, SetYearSort, numPages, setNumPages } = useContext(DataContext)
 
     let genresSet = new Set(booksJson.map(x => x.book.genre));
     let genresArray = [...genresSet]
     genresArray.unshift('Todos');
 
+    const [menuMobile, setMenuMobile] = useState(false)
 
     return (
-        <aside className=' h-screen w-[200px]  bg-gray px-4'>
+        <aside className={` bg-gray px-4 absolute z-30 ${menuMobile ? "" : "h-16"}  overflow-hidden w-full md:static  md:h-screen md:w-[200px] transition-all   `}>
+            <div className='flex justify-between'>
+                <h2 className=' text-3xl font-bold py-4 md:py-10'>Books</h2>
 
-            <h2 className=' text-3xl font-bold py-10'>Books</h2>
+                <button
+                    className=' md:hidden'
+                    onClick={() => setMenuMobile(!menuMobile)}
+                > 
+                    <IconFilter />
+                </button>
+
+            </div>
             <h3 className=' text-skyblueP text-2xl font-bold py-2'>Filtros</h3>
 
             <div className=' flex flex-col gap-4'>
