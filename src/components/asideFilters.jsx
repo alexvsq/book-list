@@ -6,8 +6,8 @@ export default function asideFilters() {
 
     const { textInput, setTextInput, SetGenreSearch, SetYearSort, numPages, setNumPages } = useContext(DataContext)
 
-    let genresSet = new Set(booksJson.map(x => x.book.genre));
-    let genresArray = [...genresSet]
+    const genresSet = new Set(booksJson.map(x => x.book.genre));
+    const genresArray = [...genresSet]
     genresArray.unshift('Todos');
 
     const [menuMobile, setMenuMobile] = useState(false)
@@ -20,7 +20,7 @@ export default function asideFilters() {
                 <button
                     className=' md:hidden'
                     onClick={() => setMenuMobile(!menuMobile)}
-                > 
+                >
                     <IconFilter />
                 </button>
 

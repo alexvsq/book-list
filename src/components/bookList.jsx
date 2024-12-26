@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { DataContext } from '../contexts/contexts';
 import BookSelected from './bookSelected';
 import Home from './home';
@@ -6,12 +6,9 @@ import ListLectura from './listLectura';
 
 export default function bookList() {
 
-    const { listLibros, setListLibros, listaLectura, setListaLectura, setTextInput } = useContext(DataContext)
-
-    const [bookSelected, setBookSelected] = useState([])
+    const { listLibros, listaLectura, setTextInput } = useContext(DataContext)
 
     const [page, setPage] = useState('home')
-
 
     return (
 
@@ -35,24 +32,19 @@ export default function bookList() {
 
                 <div className=' max-h-screen overflow-y-scroll pt-12 pb-5 md:p-5 scrollerStyle'>
 
-
                     <section className=' justify-center pt-20 grid   grid-cols-[repeat(auto-fit,minmax(200px,200px))] gap-2 md:gap-4 '>
 
                         {
-                            page === 'home' && <Home bookSelected={bookSelected} setBookSelected={setBookSelected} />
+                            page === 'home' && <Home />
                         }{
-                            page === 'listLectura' && <ListLectura bookSelected={bookSelected} setBookSelected={setBookSelected} />
+                            page === 'listLectura' && <ListLectura />
                         }
-
-
-
-
 
                     </section>
                 </div>
             </div>
 
-            <BookSelected bookSelected={bookSelected} setBookSelected={setBookSelected} />
+            <BookSelected />
 
         </section>
     )

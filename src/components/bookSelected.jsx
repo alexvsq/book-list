@@ -1,38 +1,33 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import IconClose from '../assets/icon-close'
 import { DataContext } from '../contexts/contexts';
 
-export default function bookSelected({ bookSelected, setBookSelected }) {
+export default function bookSelected() {
 
-    const { listLibros, setListLibros, listaLectura, setListaLectura } = useContext(DataContext)
+    const { listLibros, setListLibros, listaLectura, setListaLectura, bookSelected, setBookSelected } = useContext(DataContext)
 
     function addBook(book) {
         setListaLectura([...listaLectura.concat(book)])
         setListLibros((prevList) => (prevList.filter((item) => item.book.title !== book.book.title)))
-
     }
 
     function DeleteBook(book) {
         setListaLectura(listaLectura.filter((item) => item.book.title !== bookSelected.book.title))
         setListLibros(listLibros.concat(book))
-
     }
-  
+
     function guardar() {
-    
-         localStorage.setItem('listLibrosStorage', JSON.stringify(listLibros));
-        localStorage.setItem('listaLecturaStorage', JSON.stringify(listaLectura));        
+        localStorage.setItem('listLibrosStorage', JSON.stringify(listLibros));
+        localStorage.setItem('listaLecturaStorage', JSON.stringify(listaLectura));
     }
 
     useEffect(() => {
         if (bookSelected.length === 0) {
-        }else{
-             guardar();
+        } else {
+            guardar();
         }
-        
-      }, [listLibros, listaLectura]);
-    
 
+    }, [listLibros, listaLectura]);
 
     return (
         <aside className={` absolute z-40 md:static m-4 md:m-0  max-h-screen md:max-w-[320px] md:py-5 overflow-y-scroll scrollerStyle  ${Object.values(bookSelected).length > 0 ? '' : 'hidden'}`}>
@@ -63,7 +58,8 @@ export default function bookSelected({ bookSelected, setBookSelected }) {
                     listaLectura.includes(bookSelected) ?
                         <button
                             onClick={() => {
-                                 DeleteBook(bookSelected)  }}
+                                DeleteBook(bookSelected)
+                            }}
                             className='  bg-red py-2 px-4 rounded-[10px] my-4 hover:scale-105 transition  font-semibold '>
                             Eliminar de la Lista de Lectura
                         </button> :
