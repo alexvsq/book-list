@@ -34,7 +34,7 @@ export default function BookSelected() {
     <div className=" fixed inset-0 z-20 bg-[#000000]/50 backdrop-blur-sm flex justify-center items-center">
       <article className="w-[90%] h-[90%] md:w-[920px] md:h-[470px] md:max-w-[90%] bg-gray p-3 rounded-lg overflow-y-auto animate-fade animate-duration-500">
         {bookSelected ? (
-          <div className=" flex flex-col items-center md:items-stretch md:flex-row h-full relative">
+          <div className=" flex flex-col items-center md:items-stretch md:flex-row md:h-full relative">
             <button
               onClick={clearUrl}
               className=" bg-red w-9 h-9 p-1 rounded-full cursor-pointer absolute top-2 right-5"
@@ -42,9 +42,9 @@ export default function BookSelected() {
               <img src="icons/close.png" alt="" className="w-full h-full" />
             </button>
 
-            <aside className=" w-[80%] md:w-auto  aspect-[6/9]  ">
+            <aside className=" w-[60%] md:w-auto  aspect-[6/9]  ">
               <img
-                className="w-full md:h-full rounded-lg object-cover"
+                className="w-full h-full md:h-full rounded-lg object-cover"
                 src={bookSelected.volumeInfo.imageLinks?.thumbnail}
                 alt=""
               />

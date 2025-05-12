@@ -19,7 +19,7 @@ export default function SearchFilter() {
   return (
     <article className=" flex flex-col">
       <label htmlFor="" className="my-2">
-        Buscar
+        Search
       </label>
       <input
         className=" bg-graydark rounded-lg py-1 px-3 "

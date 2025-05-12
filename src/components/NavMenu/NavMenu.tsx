@@ -13,13 +13,13 @@ export default function Nav() {
           onClick={() => setShowMenuMobile(!showMenuMobile)}
           className=" md:hidden bg-skyblue-p cursor-pointer rounded-lg py-1 px-2 w-fit"
         >
-          <p>Filtros</p>
+          <p>Filters</p>
         </div>
       </header>
 
       <footer className=" hidden md:block">
         <header className="my-3">
-          <h3 className=" text-2xl font-semibold text-skyblue-p">Filtros</h3>
+          <h3 className=" text-2xl font-semibold text-skyblue-p">Filters</h3>
         </header>
 
         <div className="flex flex-col gap-3">
@@ -36,7 +36,7 @@ export default function Nav() {
                 onClick={() => setShowMenuMobile(!showMenuMobile)}
                 className="bg-red cursor-pointer rounded-lg py-1 px-2 w-fit"
               >
-                Cerrar
+                Close
               </p>
             </header>
             <SearchFilter />
