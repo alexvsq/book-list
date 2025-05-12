@@ -1,4 +1,4 @@
-import { ResponseGetBooks, BookType } from "../types/types";
+import { ResponseGetBooks, BookType, searchFiltersType } from "../types/types";
 
 interface getBooksResponse {
   error: boolean;
@@ -7,13 +7,15 @@ interface getBooksResponse {
 }
 
 export async function getBooks(
-  page: number | null,
-  search: string | null
+  filters: searchFiltersType
 ): Promise<getBooksResponse> {
-  const startIndex = page ? (page - 1) * 40 : 0;
-  const searchQuery = search ? `&q=${search}` : "&q=a";
+  const startIndex = filters.page ? (filters.page - 1) * 40 : 0;
+  const searchQuery = filters.search ? `&q=${filters.search}` : "&q=a";
+  const orderQuery =
+    filters.order && filters.order !== "relevance" ? "newest" : "relevance";
 
-  const URL = `https://www.googleapis.com/books/v1/volumes?${searchQuery}&startIndex=${startIndex}&maxResults=40&filter=paid-ebooks`;
+  const URL = `https://www.googleapis.com/books/v1/volumes?${searchQuery}&startIndex=${startIndex}&maxResults=40&orderBy=${orderQuery}&filter=paid-ebooks`;
+  console.log(URL);
 
   try {
     const response = await fetch(URL);

@@ -10,63 +10,55 @@ export default function Pagination({
   const currentPage = pageUrl ? Number(pageUrl) : 1;
   const totalPages = Math.ceil(BooksNumFound / 32);
 
-  const setUrlPage = (page: string) => {
+  const nextPage = () => {
+    const newPage = currentPage + 1;
     const newParams = new URLSearchParams(searchParams);
-    newParams.set("page", page);
+    newParams.set("page", newPage.toString());
+    setSearchParams(newParams);
+  };
+  const prevPage = () => {
+    if (currentPage <= 1) return;
+    const newPage = currentPage - 1;
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("page", newPage.toString());
     setSearchParams(newParams);
   };
 
-  const isCurrentPage = (page: number) => page === currentPage;
-
-  const createListPages = (): (number | string)[] => {
-    const listPages: (number | string)[] = [];
-
-    if (totalPages <= 10) {
-      for (let i = 1; i <= totalPages; i++) listPages.push(i);
-      return listPages;
-    }
-
-    listPages.push(1);
-
-    if (currentPage > 5) {
-      listPages.push("...");
-    }
-
-    const start = Math.max(2, currentPage - 2);
-    const end = Math.min(totalPages - 1, currentPage + 2);
-
-    for (let i = start; i <= end; i++) {
-      listPages.push(i);
-    }
-
-    if (currentPage < totalPages - 4) {
-      listPages.push("...");
-    }
-
-    listPages.push(totalPages);
-
-    return listPages;
-  };
-
-  const pages = createListPages();
-
   return (
     <div className="fixed  w-full bottom-2">
-      <footer className="flex justify-center ">
-        <div className="bg-graydark/60 backdrop-blur-sm flex gap-2 px-4 py-2 rounded-2xl">
-          {pages.map((p, i) => (
-            <p
-              key={i}
-              onClick={() => typeof p === "number" && setUrlPage(p.toString())}
-              className={`w-fit h-fit ${
-                isCurrentPage(Number(p)) ? "bg-skyblue-p" : "bg-graydark"
-              } ${
-                typeof p === "number" ? "cursor-pointer" : "cursor-default"
-              } rounded-lg py-1 px-2 text-white`}
+      <footer className="flex justify-center">
+        <div className="flex items-center bg-graydark/60 backdrop-blur-xs gap-3 py-2 px-3 rounded-2xl">
+          {currentPage > 1 && (
+            <div onClick={prevPage}>
+              <img
+                src="icons/arrow.png"
+                alt=""
+                className="w-8 h-8 rotate-180 cursor-pointer"
+              />
+            </div>
+            /*  <button
+              onClick={prevPage}
+              className="bg-gray rounded-lg px-2 py-1 cursor-pointer"
             >
-              {p}
-            </p>
-          ))}
+              Prev Page
+            </button> */
+          )}
+          <p className=" bg-gray rounded-lg px-2 py-1">{currentPage}</p>
+          {totalPages > 10 && (
+            <div onClick={nextPage}>
+              <img
+                src="icons/arrow.png"
+                alt=""
+                className="w-8 h-8  cursor-pointer"
+              />
+            </div>
+            /*  <button
+              onClick={nextPage}
+              className="bg-gray rounded-lg px-2 py-1 cursor-pointer"
+            >
+              Next Page
+            </button> */
+          )}
         </div>
       </footer>
     </div>

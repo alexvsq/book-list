@@ -1,7 +1,7 @@
 import CardBook from "./book/CardBook";
 import BookSelected from "./book/BookSelected";
 import Pagination from "./Pagination";
-import { ResponseGetBooks } from "../../types/types";
+import { ResponseGetBooks, searchFiltersType } from "../../types/types";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { getBooks } from "../../api/api";
@@ -13,14 +13,21 @@ export default function ContentBooks() {
 
   const page = searchParams.get("page");
   const search = searchParams.get("search");
+  const order = searchParams.get("order");
+
+  const filtersSearch: searchFiltersType = {
+    page: Number(page),
+    search: search,
+    order: order,
+  };
 
   useEffect(() => {
     setBooks(null);
-    getBooks(Number(page), search).then((res) => {
+    getBooks(filtersSearch).then((res) => {
       if (res.error || res.data == null) return;
       setBooks(res.data);
     });
-  }, [page, search]);
+  }, [page, search, order]);
 
   return (
     <>

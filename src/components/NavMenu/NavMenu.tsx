@@ -1,7 +1,5 @@
 import { useState } from "react";
-import GenreFilter from "./filters/GenreFilter";
-import Year from "./filters/Year";
-import NumberMinPages from "./filters/NumberMinPages";
+import Order from "./filters/Order";
 import SearchFilter from "./filters/SearchFilter";
 
 export default function Nav() {
@@ -27,11 +25,7 @@ export default function Nav() {
         <div className="flex flex-col gap-3">
           <SearchFilter />
 
-          <GenreFilter />
-
-          <Year />
-
-          {/*    <NumberMinPages /> */}
+          <Order />
         </div>
       </footer>
       {showMenuMobile && (
@@ -47,9 +41,7 @@ export default function Nav() {
             </header>
             <SearchFilter />
 
-            <GenreFilter />
-
-            <Year />
+            <Order />
           </div>
         </div>
       )}

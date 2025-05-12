@@ -88,3 +88,9 @@ export interface ResponseGetBooks {
   totalItems: number;
   items: BookType[];
 }
+
+export interface searchFiltersType {
+  page: number | null;
+  search: string | null;
+  order: string | null;
+}
