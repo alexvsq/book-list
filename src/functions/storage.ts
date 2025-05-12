@@ -1,10 +1,10 @@
-import { Book } from "../types/types";
+import { BookType } from "../types/types";
 
-export function SaveListReading(BooksToSave: Book[]) {
+export function SaveListReading(BooksToSave: BookType[]) {
   localStorage.setItem("StorageListReading", JSON.stringify(BooksToSave));
 }
 
-export function GetStorageListReading(): Book[] | null {
+export function GetStorageListReading(): BookType[] | null {
   try {
     const storageList = localStorage.getItem("StorageListReading");
     if (storageList) {
