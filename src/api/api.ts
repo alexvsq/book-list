@@ -1,74 +1,43 @@
 import { ResponseGetBooks, BookType, searchFiltersType } from "../types/types";
 
-interface getBooksResponse {
-  error: boolean;
-  message: string;
-  data: ResponseGetBooks | null;
-}
+const URL_BASE = "https://www.googleapis.com/books/v1/volumes";
 
-export async function getBooks(
-  filters: searchFiltersType
-): Promise<getBooksResponse> {
-  const startIndex = filters.page ? (filters.page - 1) * 40 : 0;
-  const searchQuery = filters.search ? `&q=${filters.search}` : "&q=a";
-  const orderQuery =
-    filters.order && filters.order !== "relevance" ? "newest" : "relevance";
-
-  const URL = `https://www.googleapis.com/books/v1/volumes?${searchQuery}&startIndex=${startIndex}&maxResults=40&orderBy=${orderQuery}&filter=paid-ebooks`;
-  console.log(URL);
-
+export async function getBooks(page = 1, search = "", orderQuery = "") {
   try {
-    const response = await fetch(URL);
+    const url = new URL(URL_BASE);
+    url.searchParams.set("filter", "paid-ebooks");
+    url.searchParams.set("startIndex", ((page - 1) * 40).toString());
+    url.searchParams.set("maxResults", "40");
+    url.searchParams.set("q", search ? search : "a");
+    if (orderQuery) url.searchParams.set("orderBy", orderQuery || "relevance");
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data: ResponseGetBooks = await response.json();
 
-    const data = await response.json();
-    return {
-      error: false,
-      message: "success",
-      data: data,
-    };
+    return data;
   } catch (error) {
-    console.error("Error fetching books:", error);
-    return {
-      error: true,
-      message: "error fetching data",
-      data: null,
-    };
+    throw new Error("Server error");
   }
 }
 
-interface getBookResponse {
-  error: boolean;
-  message: string;
-  data: BookType | null;
-}
-
-export async function getBook(bookId: string): Promise<getBookResponse> {
-  const URL = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+export async function getBookById(bookId: string | undefined) {
+  if (!bookId) throw new Error("BookId is undefined");
 
   try {
-    const response = await fetch(URL);
+    const url = new URL("volumes/" + bookId, URL_BASE);
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data: BookType = await response.json();
 
-    const data = await response.json();
-
-    return {
-      error: false,
-      message: "success",
-      data: data,
-    };
+    return data;
   } catch (error) {
-    console.error("Error fetching books:", error);
-    return {
-      error: true,
-      message: "error fetching data",
-      data: null,
-    };
+    throw new Error("Server error");
   }
 }
