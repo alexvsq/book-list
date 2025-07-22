@@ -1,10 +1,10 @@
-import NavMenu from "../components/NavMenu/NavMenu";
+import SideMenu from "../components/SideMenu/SideMenu";
 import ContentBooks from "../components/ContentBooks/ContentBooks";
 
 function App() {
   return (
-    <main className="flex flex-col md:flex-row h-screen w-screen">
-      <NavMenu />
+    <main className="grid grid-cols-1 md:grid-cols-5 gap-8 container-principal">
+      <SideMenu />
       <ContentBooks />
     </main>
   );

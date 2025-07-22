@@ -1,4 +1,4 @@
 export const skeletonColors = {
-  baseColor: "#25282c",
-  highlightColor: "#2E3339",
+  baseColor: "#ffffff",
+  highlightColor: "#f1f5f9cc",
 };

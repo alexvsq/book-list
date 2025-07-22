@@ -1,48 +1,42 @@
-import CardBook from "./book/CardBook";
-import BookSelected from "./book/BookSelected";
-import Pagination from "./Pagination";
-import { ResponseGetBooks, searchFiltersType } from "../../types/types";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router";
-import { getBooks } from "../../api/api";
-import ContentBooksSkeleton from "../skeletons/ContentBooksSkeleton";
+import CardBook from "./CardBook";
+import { SkeletonBook } from "../skeletons/ContentBooksSkeleton";
+import { useGetBooks } from '../../hooks/useGetBooks'
 
 export default function ContentBooks() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [books, setBooks] = useState<ResponseGetBooks | null>(null);
 
-  const page = searchParams.get("page");
-  const search = searchParams.get("search");
-  const order = searchParams.get("order");
+  const { data, fetchNextPage, hasNextPage, error, isError, isLoading, isFetchingNextPage } =
+    useGetBooks();
 
-  const filtersSearch: searchFiltersType = {
-    page: Number(page),
-    search: search,
-    order: order,
-  };
-
-  useEffect(() => {
-    setBooks(null);
-    getBooks(filtersSearch).then((res) => {
-      if (res.error || res.data == null) return;
-      setBooks(res.data);
-    });
-  }, [page, search, order]);
-
+  if (isError) {
+    return <div>Something went wrong</div>;
+  }
   return (
-    <>
-      {books ? (
-        <div className="flex-1 md:h-screen md:w-full overflow-y-scroll grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] gap-3 md:gap-5 p-3 ">
-          {books.items?.map((book, index) => (
-            <CardBook key={index} Book={book} />
-          ))}
-        </div>
-      ) : (
-        <ContentBooksSkeleton />
-      )}
-      <BookSelected />
+    <div className="h-full md:col-span-4 md:pt-14">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:py-6">
+        {
+          isLoading ?
+            (
+              Array(15).fill(0).map((_, index) => (
+                <SkeletonBook key={index} />
+              ))
+            )
+            : data?.pages.flatMap((page) => page.items).map((book, index) => (
+              <CardBook key={book.id + index} Book={book} />
+            ))
+        }
+      </div>
 
-      {books && <Pagination BooksNumFound={books.totalItems} />}
-    </>
+      <div className="flex justify-center py-5">
+        {isFetchingNextPage && <p>Loading...</p>}
+        {!isFetchingNextPage && hasNextPage ?
+          <button
+            onClick={() => fetchNextPage()}
+            className="bg-gray-200 dark:bg-gray-800 rounded-lg p-2 w-fit"
+          >
+            Load More
+          </button>
+          : null}
+      </div>
+    </div>
   );
 }

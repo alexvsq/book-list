@@ -1,41 +1,27 @@
 @import "tailwindcss";
 @import "tailwindcss-animated";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-*: initial;
   --color-transparent: transparent;
   --color-current: currentColor;
-  --color-white: #ffffff;
-  --color-skyblue-p: #1d9bf0;
-  --color-gray: #232528;
-  --color-graydark: #191b1e;
-  --color-tahiti: #3ab7bf;
-  --color-colortext: #686868;
-  --color-red: #9f1239;
-}
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+  --color-bg-secodary: #f1f5f9cc;
+  --color-bg-secodary-dark: #27272a;
+  --color-text-secondary: #64748b;
+  --color-text-secondary-dark: #a3a3a3;
+  --color-border: #e5e5e5;
+  --color-border-dark: #27272a;
 }
 
 body {
-  background-color: #1c1e21;
-  color: white;
+  @apply bg-white dark:bg-black text-[#020817] dark:text-white;
   font-family: "Poppins", sans-serif;
+}
+
+.container-principal {
+  @apply container mx-auto px-2 md:px-6;
 }
 
 .scrollerStyle {
