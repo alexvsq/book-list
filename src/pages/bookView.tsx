@@ -1,16 +1,20 @@
 import { useParams } from "react-router";
 import { getBookById } from "../api/api";
 import { useQuery } from "@tanstack/react-query";
-import { Star, Users, BookOpen } from "lucide-react";
+import { Star, Users, BookOpen, Library, BookmarkCheck } from "lucide-react";
 import { SkeletonBookSelected } from '../components/skeletons/ContentBooksSkeleton'
+import { useReadingList } from '../hooks/useReadingList'
 
 export default function BookView() {
   const { bookSelected } = useParams();
+  const { addToList, removeFromList, readingList } = useReadingList();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["bookView: " + bookSelected],
     queryFn: () => getBookById(bookSelected),
   });
+
+  const isInReadingList = readingList.find((book) => book.id === data?.id);
 
   if (isError) {
     console.log(error);
@@ -37,9 +41,20 @@ export default function BookView() {
             className="w-full h-full object-cover"
           />
         </div>
-        <button className="bg-bg-secodary dark:bg-bg-secodary-dark rounded-lg flex justify-center items-center py-3 w-full">
-          Add to Reading List
-        </button>
+        {
+          isInReadingList ? (
+            <button
+              onClick={() => removeFromList(data?.id)}
+              className="bg-sky-600 text-white rounded-lg flex justify-center items-center py-3 w-full gap-4 cursor-pointer">
+              <BookmarkCheck /> <p>Remove from Reading List</p>
+            </button>
+          ) : <button
+            onClick={() => addToList(data)}
+            className="bg-bg-secodary dark:bg-bg-secodary-dark rounded-lg flex justify-center items-center py-3 w-full gap-4 cursor-pointer">
+            <Library /> <p>Add to Reading List</p>
+          </button>
+        }
+
       </div>
 
       <div className="md:col-span-2 h-full py-8">
